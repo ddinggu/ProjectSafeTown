@@ -14,11 +14,12 @@ app.set('view engine','ejs');
 app.engine('html',require('ejs').renderFile);
 
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
 
 //kibaek. routing enviroment for client main events
 let mainRouter = require('./router/mainRouter')(app,fs);
 
 //gyungjin. routing enviroment for db associated events
-//let dbRouter = require('./router/dbRouter')();
+let User = require('./DBmodel/userSchema');
+let userRouther = require('./router/userRouter')(app, User);
