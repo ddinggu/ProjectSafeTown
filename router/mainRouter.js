@@ -27,4 +27,19 @@ module.exports = function(app,MongoClient){
       });
     });
   });
+
+  // Import cctv data router
+  app.get('/testimportcctv', (req, res) => {
+    MongoClient.connect(url, (err, client) => {
+      var db = client.db("cctv");
+      var cursor = db.collection('geoSeoulcctv').find({});
+      cursor.toArray((err, item) => {
+        if(err) console.log(err);
+        else {
+          res.send(item);
+          client.close();
+        }
+      });
+    });
+  });
 }
