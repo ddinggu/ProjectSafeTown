@@ -1,4 +1,4 @@
-// email양식 체크(아직 메일까지 거르는건 구현못함)
+// email양식 체크
 function emailCheck(email){
     let checker = /^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$/;
 
