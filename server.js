@@ -12,7 +12,7 @@ let server = app.listen(3000,function(){
   console.log("server started on port 3000!");
 })
 
-mongoose.connect('mongodb+srv://meow_db:mnbvcxz070809@ddinggu-m001-dgyfk.mongodb.net/cctv');
+mongoose.connect('Mongo Atlas Server Url');
 
 app.set('views',__dirname+'/view');
 app.set('view engine','ejs');
