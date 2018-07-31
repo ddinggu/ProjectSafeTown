@@ -1,5 +1,5 @@
 module.exports = function(app,MongoClient){
-  var url = 'mongodb+srv://meow_db:mnbvcxz070809@ddinggu-m001-dgyfk.mongodb.net/cctv';
+  var url = 'mongodb+srv://meow_admin:zxcvbnm070809@ddinggu-m001-dgyfk.mongodb.net/cctv';
 
   //default 화면
   app.get('/',function(req,res){
