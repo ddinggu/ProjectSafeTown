@@ -15,7 +15,9 @@ module.exports = function(app, User) {
                         let property = Object.keys(err.errors)[0];
                         res.send(err.errors[property]['message']);
                     } 
-                    res.send('확인 완료! DB 확인해보세요.');
+                    res.send(`확인 완료! DB 확인해보세요. 
+                              쿠키 : ${req.session}
+                              세션 : ${req.session.email_address}`);
                 })
             }
         })
@@ -34,7 +36,10 @@ module.exports = function(app, User) {
             else{
                 member.checkPassword(inputPassword, function(err, isMatch) {
                     if(err) res.send(err);
-                    if(isMatch) res.send('로그인 되었습니다.');
+                    if(isMatch) {
+                        req.session.email = body.email_address;
+                        res.send('로그인 되었습니다.');
+                    }
                     else res.send('비밀번호가 틀렸습니다.')
                 })
             }
@@ -64,4 +69,37 @@ module.exports = function(app, User) {
         })
     })
 
-}// 
+    app.get('/logout', function(req, res){
+        res.send(`
+        <h1>logout</h1>
+        <form action='/logout' method='post'>
+            <p><input type='text' name="email_address" placeholder="title"/></p>
+            <p><input type='password' name="password" placeholder="author"/></p>
+            <p><input type='submit'/></p>
+        </form>
+        `)
+    })
+
+    app.post('/logout', function(req, res){
+        let body = req.body;
+        let validator = {email_address : body.email_address};
+        let inputPassword = body.password;
+            
+        User.findOne(validator, function(err, member) {
+            if(err) res.send(err);
+            if(!member) res.send('아이디가 틀렸습니다.')
+            else{
+                member.checkPassword(inputPassword, function(err, isMatch) {
+                    if(err) res.send(err);
+                    if(isMatch) {
+                        req.session.destroy();
+                        res.send(`로그아웃 되었습니다.
+                                  세션 : ${req.session}`);
+                    }
+                    else res.send('비밀번호가 틀렸습니다.')
+                })
+            }
+        })
+    })
+
+}// end
