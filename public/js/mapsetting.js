@@ -2,8 +2,8 @@
 // navigator의 parameter에 따라 성공시 이동, 실패시 서울시청에 가만히 있는다. 
 // 이 view를 실행 시 maps에서 설정한 mongodb와 연동한 값들을 data로 불러온다.
 // 이 값들은 $.get(..)에서 data parameter로 설정되고, toArray한 data들을 
-$(window).on('load', () =>{
-    $.get('/testimportcctv', (data) => {
+$(window).on('load', function(){
+    $.get('/testimportcctv', function(data) {
         for(var i=0; i < 300; i++){
             var cctvLocation = data[i]['geometry']['coordinates'];
             createMaker(cctvLocation);
@@ -42,6 +42,16 @@ var marker = new naver.maps.Marker({
  // 마커 옮기는 리스너 세팅 (marker와 map을 scope때문에 받아 올 수 없기 때문에 마커를 기본적으로 세팅)
  naver.maps.Event.addListener(map, 'click', function(e) {
     marker.setPosition(e.coord);
+});
+
+// 마커를 클릭하면 설정한 Zoom과 중앙으로 이동
+naver.maps.Event.addListener(marker, 'click', function() {
+    map.setZoom(14);
+    map.setCenter(marker.getPosition());
+    $.get('/userLocaRegsiter', function(data){
+        if(!data) alert('로그인이 필요합니다!');
+        alert(`${data}님 안녕하세요!`)
+    })
 });
 
 //-------------------------------- 기본적인 마커와 Map 생성 끝 ------------------------
@@ -108,15 +118,17 @@ function hideMarker(map, marker) {
 var locationBtnHtml = '<a href="#" class="btn_mylct"><span class="spr_trff spr_ico_mylct">GPS</span></a>';
 
 //customControl 객체를 이용하여 gps 활성화 및 위치 이동
-var customControler = new naver.maps.CustomControl(locationBtnHtml, {
+var gpsControler = new naver.maps.CustomControl(locationBtnHtml, {
     position: naver.maps.Position.TOP_LEFT
 });
 
-customControler.setMap(map);
+gpsControler.setMap(map);
 
-var domEventListener = naver.maps.Event.addDOMListener(customControler.getElement(), 'click', function() {
+naver.maps.Event.addDOMListener(gpsControler.getElement(), 'click', function() {
     navigator.geolocation.getCurrentPosition(userLocateAcceptSuccess, userLocateAcceptFailed, userLocateOption);
 });
+
+
 //-------------------------- GPS(사용자 위치 파악) 버튼 생성 끝 --------------------------------
 
 
