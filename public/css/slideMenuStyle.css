@@ -1,0 +1,7 @@
+#slideMenu{
+  z-index: 100;
+  margin-top: -100%;
+}
+#map{
+  z-index: -1;
+}
