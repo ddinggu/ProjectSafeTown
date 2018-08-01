@@ -3,6 +3,10 @@ module.exports = function(app,MongoClient){
 
   //default 화면
   app.get('/',function(req,res){
+    res.render('load', {title:"My homepage", length:5});
+  });
+
+  app.get('/main',function(req,res){
     res.render('index', {title:"My homepage", length:5});
   });
 
@@ -29,6 +33,7 @@ module.exports = function(app,MongoClient){
   });
 
   // Import cctv data router
+<<<<<<< HEAD
   app.get('/testimportcctv', (req, res) => {
     MongoClient.connect(url, (err, client) => {
       var db = client.db("cctv");
@@ -43,3 +48,27 @@ module.exports = function(app,MongoClient){
     });
   });
 }
+=======
+  app.get('/testimportcctv', function(req, res) {
+        MongoClient.connect(url, function(err, client) {
+            var db = client.db("cctv");
+            var cursor = db.collection('geoSeoulcctv').find({});
+            cursor.toArray((err, item) => {
+                if(err) console.log(err);
+                else {
+                    res.send(item);
+                    client.close();
+                }
+            })
+        });
+    });
+
+    // Click orange marker
+    app.get('/userLocaRegsiter', function(req, res){
+        if(!req.session.email) res.send(null);
+         res.send(req.session.email);
+    })
+
+
+}// end point
+>>>>>>> f7e5e016d8be843ee01deb421f7e67dc0fa71f1e

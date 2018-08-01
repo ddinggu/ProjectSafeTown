@@ -1,5 +1,14 @@
 #userform{
   background-color: sandybrown;
+  z-index: 1;
+}
+#map{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+#userform{
+  background-color: sandybrown;
 }
 .element{
   border: 1px solid black;

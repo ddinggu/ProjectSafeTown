@@ -30,6 +30,7 @@ app.use(session({
         ttl: 60 * 60 // 1시간후 DB세션 소멸
     }),
     cookie : {
+<<<<<<< HEAD
         maxAge : 1000 * 60 * 60 // 1시간후 쿠키 세션 소멸
     }
 }));
@@ -37,6 +38,15 @@ app.use(session({
 //kibaek. routing enviroment for client main events
 let mainRouter = require('./router/mainRouter')(app,MongoClient);
 
+=======
+        maxAge : new Date() + 1000 * 60 * 60 // 1시간후 쿠키 세션 소멸
+    }
+}));
+
+>>>>>>> f7e5e016d8be843ee01deb421f7e67dc0fa71f1e
 //gyungjin. routing enviroment for db associated events
 let User = require('./DBmodel/userSchema');
 let userRouther = require('./router/userRouter')(app, User);
+
+//kibaek. routing enviroment for client main events
+let mainRouter = require('./router/mainRouter')(app,User);

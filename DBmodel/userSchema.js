@@ -8,6 +8,7 @@ const saltRounds = 10; // hash화 하기 위한 salt 값 지정
 
 // mongoose가 mongo ATLAS 서버에 접근하기 위한 url
 mongoose.connect('mongodb+srv://meow_admin:zxcvbnm070809@ddinggu-m001-dgyfk.mongodb.net/cctv');
+
 const db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', function(){
