@@ -12,7 +12,7 @@ let server = app.listen(3000,function(){
   console.log("server started on port 3000!");
 })
 
-mongoose.connect('mongodb+srv://meow_admin:zxcvbnm070809@ddinggu-m001-dgyfk.mongodb.net/cctv');
+mongoose.connect('mongo url');
 
 app.set('views',__dirname+'/view');
 app.set('view engine','ejs');

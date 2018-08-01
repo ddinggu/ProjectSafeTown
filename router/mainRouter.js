@@ -1,10 +1,14 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb+srv://meow_admin:zxcvbnm070809@ddinggu-m001-dgyfk.mongodb.net/cctv';
+const url = 'mongo url';
 
 
 module.exports = function(app,User){
   //default 화면
   app.get('/',function(req,res){
+    res.render('load', {title:"My homepage", length:5});
+  });  
+
+  app.get('/main',function(req,res){
     res.render('index', {title:"My homepage", length:5});
   });  
 
