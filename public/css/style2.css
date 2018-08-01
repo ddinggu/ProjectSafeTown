@@ -1,7 +1,7 @@
 body{
     /* located in the file */
     /* https://css-tricks.com/using-svg/ */
-    background: url("Images/main_1_cover.svg") no-repeat center center fixed;
+    background: url("../image/main_1_cover.svg") no-repeat center center fixed;
     background-size: cover;
     /* This shows white spaces on both sides or at the top and the bottom for  */
     /* background-size: 100% 100%; */

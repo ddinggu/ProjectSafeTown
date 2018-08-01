@@ -12,7 +12,7 @@ let server = app.listen(3000,function(){
   console.log("server started on port 3000!");
 })
 
-mongoose.connect('Mongo Atlas Server Url');
+mongoose.connect('mongo url');
 
 app.set('views',__dirname+'/view');
 app.set('view engine','ejs');
@@ -30,13 +30,14 @@ app.use(session({
         ttl: 60 * 60 // 1시간후 DB세션 소멸
     }),
     cookie : {
-        maxAge : 1000 * 60 * 60 // 1시간후 쿠키 세션 소멸 
+        maxAge : new Date() + 1000 * 60 * 60 // 1시간후 쿠키 세션 소멸 
     }
 }));
-
-//kibaek. routing enviroment for client main events
-let mainRouter = require('./router/mainRouter')(app,fs);
 
 //gyungjin. routing enviroment for db associated events
 let User = require('./DBmodel/userSchema');
 let userRouther = require('./router/userRouter')(app, User);
+
+//kibaek. routing enviroment for client main events
+let mainRouter = require('./router/mainRouter')(app,User);
+
