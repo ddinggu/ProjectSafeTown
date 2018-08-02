@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); // 비밀번호 hash화를 위한 모듈
 const Schema = mongoose.Schema;
 const saltRounds = 10; // hash화 하기 위한 salt 값 지정
+const config = require("../config/config.json"); // hidden Url
 
 //----------------- mongoose를 통한 MongoDB Atlas server 접속 -----------------------
       
 // mongoose가 mongo ATLAS 서버에 접근하기 위한 url       
-mongoose.connect('mongo url');
+mongoose.connect(config.mongoUrl);
 const db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', function(){

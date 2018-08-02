@@ -36,7 +36,14 @@ var map = new naver.maps.Map('map', mapOption);
 // 초기 마커 생성(scope 문제때문에 초기에 생성해줘야한다.)
 var marker = new naver.maps.Marker({
     position : defaultLoaction,
-    map : map
+    map : map,
+    icon: {
+        content : '<div id="orangeMarker">'+
+                   '<img src="../image/orangespot.png" alt="" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none;">'
+                    +'</div>',
+        size: new naver.maps.Size(30, 40),
+        origin: new naver.maps.Point(0, 0),
+    }
 });
 
  // 마커 옮기는 리스너 세팅 (marker와 map을 scope때문에 받아 올 수 없기 때문에 마커를 기본적으로 세팅)
@@ -45,12 +52,34 @@ var marker = new naver.maps.Marker({
 });
 
 // 마커를 클릭하면 설정한 Zoom과 중앙으로 이동
-naver.maps.Event.addListener(marker, 'click', function() {
+naver.maps.Event.addListener(marker, 'click', function(e) {
     map.setZoom(14);
     map.setCenter(marker.getPosition());
+
+    
+        if(!$('.options').length){
+            var $option1 = $('<div class="options" class="withoutInput" id="option1"><span>인적이<br>드물어요</span></div>'),
+                $option2 = $('<div class="options" class="withoutInput" id="option2"><span>어두워요</span></div>'),
+                $option3 = $('<div class="options" class="withoutInput" id="option3"><span>사고가<br>난 적<br>있어요</span></div>'),
+                $option4 = $('<div class="options" class="withoutInput" id="option4"><span>유흥가에요</span></div>'),
+                $option5 = $('<div class="options" class="withInput" id="option5"><span>기타</span></div>');
+
+            $('#orangeMarker').after($option1);
+            $('#orangeMarker').after($option2);
+            $('#orangeMarker').after($option3);
+            $('#orangeMarker').after($option4);
+            $('#orangeMarker').after($option5);
+            
+        }
+        else {
+            $('#option1').remove();
+            $('#option2').remove();
+            $('#option3').remove();
+            $('#option4').remove();
+            $('#option5').remove();
+        }
     $.get('/userLocaRegsiter', function(data){
-        if(!data) alert('로그인이 필요합니다!');
-        alert(`${data}님 안녕하세요!`)
+        data ? alert(`${data}님 안녕하세요!`) :  alert('로그인이 필요합니다!');
     })
 });
 

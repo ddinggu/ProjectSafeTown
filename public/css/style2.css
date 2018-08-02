@@ -76,7 +76,7 @@ body{
 
 .options {
     background: #f7f7f5;
-    display: none;
+    /* display: none; */
     text-align: center;
     vertical-align: middle;
     position: absolute;
