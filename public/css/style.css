@@ -1,19 +1,21 @@
 #userform{
-    z-index: 1;
+  background-color: sandybrown;
+  z-index: 1;
 }
 #map{
     width: 100%;
     height: 100%;
     position: absolute;
+    position: relative; /*Gi-baek*/
 }
 #userform{
-    background-color: sandybrown;
+  background-color: sandybrown;
 }
 .element{
-    border: 1px solid black;
+  border: 1px solid black;
 }
 .testing{
-    margin: 10px;
-    border: 2px gray solid;
-    padding: 10px;
+  margin: 10px;
+  border: 2px gray solid;
+  padding: 10px;
 }

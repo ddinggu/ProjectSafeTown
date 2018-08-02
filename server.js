@@ -1,4 +1,5 @@
 //default setting
+const MongoClient = require('mongodb').MongoClient;
 const express = require('express');
 const app = express();
 const fs = require('fs');
@@ -25,7 +26,7 @@ app.use(session({
     secret : config.sessionSecret,
     resave : false,
     saveUninitialized : true,
-    store: new MongoStore({ 
+    store: new MongoStore({
         mongooseConnection: mongoose.connection,
         ttl: 60 * 60 // 1시간후 DB세션 소멸
     }),

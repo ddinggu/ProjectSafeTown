@@ -19,21 +19,21 @@ db.once('open', function(){
 
 const userSchema = new Schema({
     email_address : {
-        type : String, 
-        required : [true, '아이디를 적어주세요. (DB 필터링)'], 
-        lowercase : true, 
+        type : String,
+        required : [true, '아이디를 적어주세요. (DB 필터링)'],
+        lowercase : true,
         index : true,
         unique : true,
         match : [/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$/, '이메일 양식을 확인해주세요. (DB 필터링)']
     },
     password : {
         type : String,
-        required : [true, '비밀번호를 적어주세요. (DB 필터링)'], 
+        required : [true, '비밀번호를 적어주세요. (DB 필터링)'],
         match : [/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/, '비밀번호는 최소 특수문자,대문자 1개와 8자리 이상이어야 합니다.(DB 필터링)']
     },
     nickname : {
-        type : String, 
-        required : [true,'이름을 적어주세요.(DB 필터링)'], 
+        type : String,
+        required : [true,'이름을 적어주세요.(DB 필터링)'],
         maxlength : [8, '닉네임은 8자리 이하로 적어주세요. (DB 필터링)']
     },
     evaluation : {
@@ -49,21 +49,21 @@ const userSchema = new Schema({
             locationOpinon : {type : String, maxlength : 50},
             createDate : { type: Date, default: Date.now }
         }
-    }] 
+    }]
 });
 
 // ----------------- 지정한 스키마에 추가적인 method 설정 ----------------
-// 모델에 저장되기 전에 해쉬를 적용한 비밀번호로 저장 
-// pre hook이 진행된후 post hook이 진행된다. 
+// 모델에 저장되기 전에 해쉬를 적용한 비밀번호로 저장
+// pre hook이 진행된후 post hook이 진행된다.
 
-userSchema.pre('save', function(next) { 
+userSchema.pre('save', function(next) {
     let user = this;
 
     bcrypt.genSalt(saltRounds, function(err, salt) {
         if(err) next(err);
         bcrypt.hash(user.password, salt, function(err, hashed) {
             if(err) next(err);
-            else{ 
+            else{
                 user.password = hashed;
                 next(); // 다음 미들웨어로 진행시킨다. (미들웨어의 실행진행순서를 파악할 수 있다.)
             }
@@ -74,7 +74,7 @@ userSchema.pre('save', function(next) {
 
 
 // 비밀번호를 검사하는 메소드를 스키마에 추가
-// cb : 콜백함수 --> 다음에 지정하는 콜백함수를 실행하게 된다!!!! 
+// cb : 콜백함수 --> 다음에 지정하는 콜백함수를 실행하게 된다!!!!
 userSchema.methods.checkPassword = function(guess, cb){
     let user = this;
 
@@ -94,4 +94,3 @@ userSchema.methods.checkPassword = function(guess, cb){
 
 //--------------------- 모듈화 작업 -----------------------------
 module.exports = mongoose.model('User', userSchema);
-

@@ -32,5 +32,5 @@ module.exports = function(app, User, config){
         req.session.email ? res.send(req.session.email) : res.send(null);
     });
 
-  
+
 }// end point

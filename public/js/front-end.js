@@ -1,8 +1,9 @@
 $(document).ready(function() {
-    $("#fallingStars").delay(300).animate({'opacity':'1'},500);
-    $("#title").delay(500).animate({'opacity':'1'},800);
-    $("#slogan").delay(800).animate({'opacity':'1'},800);
+  $("#fallingStars").delay(300).animate({'opacity':'1'},500);
+  $("#title").delay(500).animate({'opacity':'1'},800);
+  $("#slogan").delay(800).animate({'opacity':'1'},800);
 
+<<<<<<< HEAD
     $('#test').on('click', function(){
         console.log($('.options'));
         if(!$('.options').length){
@@ -28,3 +29,15 @@ $(document).ready(function() {
         }
     });
 });
+=======
+  $('#test').click(function(){
+    // $(".options").fadeToggle();
+    $(".options:hidden").fadeIn();
+  });
+
+  //redirect loading page(/) to main page(/main) via button event: Gi-baek
+  $("body").click(function(){
+    window.location = window.location + "main";
+  });
+});
+>>>>>>> 8bf4de4957d9f9756b9a9551467d93ae26d354b0
