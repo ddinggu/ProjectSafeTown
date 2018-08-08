@@ -76,7 +76,7 @@ body{
 
 .options {
     background: #f7f7f5;
-    display: none;
+    /* display: none; */
     text-align: center;
     vertical-align: middle;
     position: absolute;
@@ -88,6 +88,12 @@ body{
     border-radius: 50%;
     border-style: solid;
     border-color: #F3C78D;
+    transition: 
+        background 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toggleEffect{
+    background : #F3C78D;
 }
 
 .options span {
