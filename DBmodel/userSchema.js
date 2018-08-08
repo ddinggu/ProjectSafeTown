@@ -1,5 +1,6 @@
 //------------------ 기본 모듈 및 변수 설정-----------------------
 const mongoose = require('mongoose');
+const Double = require('@mongoosejs/double'); // 좌표값을 double 형식으로 받아오기 위해서 사용
 const bcrypt = require('bcrypt'); // 비밀번호 hash화를 위한 모듈
 const Schema = mongoose.Schema;
 const saltRounds = 10; // hash화 하기 위한 salt 값 지정
@@ -16,6 +17,18 @@ db.once('open', function(){
 });
 
 //--------------------- 회원 스키마 설정 ---------------------------
+const subSchema = new Schema({
+    id : Double,
+    geometry : {
+        type : {type : String, default : 'Point'},
+        coordinates : [Double,Double]
+    },
+    properties : {
+        locationOpinon : {type : String},
+        discription : {type : String, maxlength : 50, default : 'none'},
+        createDate : { type: Date, default: Date.now }
+    }
+},{_id : false});
 
 const userSchema = new Schema({
     email_address : {
@@ -40,16 +53,7 @@ const userSchema = new Schema({
         ratings : Number,
         reviews : String
     },
-    dangerLocation : [{
-        geometry : {
-            type : {type : String, default : 'Point'},
-            coordinates : [Number, Number]
-        },
-        properties : {
-            locationOpinon : {type : String, maxlength : 50},
-            createDate : { type: Date, default: Date.now }
-        }
-    }]
+    dangerLocation : [subSchema]
 });
 
 // ----------------- 지정한 스키마에 추가적인 method 설정 ----------------
@@ -71,8 +75,6 @@ userSchema.pre('save', function(next) {
     });
 });
 
-
-
 // 비밀번호를 검사하는 메소드를 스키마에 추가
 // cb : 콜백함수 --> 다음에 지정하는 콜백함수를 실행하게 된다!!!!
 userSchema.methods.checkPassword = function(guess, cb){
@@ -84,13 +86,26 @@ userSchema.methods.checkPassword = function(guess, cb){
     })
 };
 
-// 회원가입시 기존의 아이디가 있는지 판별하는 method(미완성)
-// userSchema.methods.checkUser = function(userInput, cb){
-//     let user = this;
+// 위험지역정보를 추가 및 삭제하는 메소드를 스키마에 추가 
 
-//     if(user.email_address === val)
-// };
+userSchema.methods.addDangerLocationInfo = function(info){
+    this.dangerLocation.push({ 
+        id : info.locationId,
+        geometry : { coordinates : info.geolocation},
+        properties : { locationOpinon : info.dangerInfo}
+    }); 
+    return this.save();
+}
 
+userSchema.methods.removeDangerLocationInfo = function(info){
+    this.update(
+        { "$pull" : {"dangerLocation" : {"id" : info.locationId} } } ,
+        function(err, raw){ 
+            if(err) console.log(err);
+            else console.log('success : ' + raw);
+        }   
+    )
+}
 
 //--------------------- 모듈화 작업 -----------------------------
 module.exports = mongoose.model('User', userSchema);

@@ -17,7 +17,7 @@ module.exports = function(app, User, config){
                 if(err) console.log(err);
                 var db = client.db("cctv");
                 var cursor = db.collection('geoSeoulcctv').find({});
-                cursor.toArray((err, item) => {
+                cursor.toArray( function(err, item) {
                     if(err) console.log(err);
                     else {
                         res.send(item);
@@ -25,11 +25,6 @@ module.exports = function(app, User, config){
                     }
                 })
             });
-        });
-
-    // Click orange marker
-    app.get('/userLocaRegsiter', function(req, res){
-        req.session.email ? res.send(req.session.email) : res.send(null);
     });
 
 

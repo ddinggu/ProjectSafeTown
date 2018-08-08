@@ -9,7 +9,10 @@
     position: relative; /*Gi-baek*/
 }
 #userform{
+  z-index: 0;
+  position: absolute;
   background-color: sandybrown;
+  width : 100%;
 }
 .element{
   border: 1px solid black;
