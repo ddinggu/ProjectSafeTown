@@ -449,5 +449,10 @@ $(document).ready(function() {
             // // "withInput" END
     });   
     // "test" click function END
+
+    // // redirect loading page(/) to main page(/main) via button event: Gi-baek
+    $("body").click(function(){
+        window.location = window.location + "main";
+    });
 })
 // "document ready" function END

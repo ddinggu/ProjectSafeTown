@@ -71,7 +71,7 @@ body{
     /* display: flex;
     vertical-align: middle;
     justify-content: center; */
-    display: none;
+    /* display: none; */  /* CAUTION!! */
     text-align: center;
     vertical-align: middle;
     position: absolute;
@@ -149,7 +149,7 @@ body{
         font-size: 12px;
     }
     body{
-        background: url("Images/main_1_cover.svg") center center fixed;
+        background: url("../image/main_1_cover.svg") center center fixed;
         background-size: cover;
     }
     /* loading animation */
@@ -661,19 +661,19 @@ body{
         /* multiple background  */
         background:
             /*the main background*/
-            url(Images/main_1_cover.svg) center,
-            url(Images/main_1_cover.svg) 40% 50%,
+            url(../image/main_1_cover.svg) center,
+            url(../image/main_1_cover.svg) 40% 50%,
             /*repeat the left part*/
-            url(Images/main_1_cover.svg) 30% 50%,
-            url(Images/main_1_cover.svg) 20% 50%,
-            url(Images/main_1_cover.svg) 10% 50%,
-            url(Images/main_1_cover.svg) 0% 50%,
+            url(../image/main_1_cover.svg) 30% 50%,
+            url(../image/main_1_cover.svg) 20% 50%,
+            url(../image/main_1_cover.svg) 10% 50%,
+            url(../image/main_1_cover.svg) 0% 50%,
             /*repeat the right part*/
-            url(Images/main_1_cover.svg) 60% 50%,
-            url(Images/main_1_cover.svg) 70% 50%,
-            url(Images/main_1_cover.svg) 80% 50%,
-            url(Images/main_1_cover.svg) 90% 50%,
-            url(Images/main_1_cover.svg) 100% 50%;
+            url(../image/main_1_cover.svg) 60% 50%,
+            url(../image/main_1_cover.svg) 70% 50%,
+            url(../image/main_1_cover.svg) 80% 50%,
+            url(../image/main_1_cover.svg) 90% 50%,
+            url(../image/main_1_cover.svg) 100% 50%;
         background-repeat:no-repeat;
         background-size:contain;         
     }
