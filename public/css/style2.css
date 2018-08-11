@@ -1,8 +1,5 @@
 body{
-    /* located in the file */
     /* https://css-tricks.com/using-svg/ */
-    background: url("Images/main_1_cover.svg") no-repeat center center fixed;
-    background-size: cover;
     /* This shows white spaces on both sides or at the top and the bottom for  */
     /* background-size: 100% 100%; */
     font-style: normal;
@@ -13,6 +10,7 @@ body{
     /* https://fonts.google.com/?subset=korean */
     /* font-family: 'Sunflower', sans-serif; */
     font-family: 'Poor Story', sans-serif;
+    /* background-size: contain; */
 }
 
 #paragraph{
@@ -26,16 +24,14 @@ body{
 
 #fallingStars{
     opacity: 0;
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
-    max-width: cover;
-    max-height: 100%;
+    /* Enlarge starts according to the screen size */
+    width: 100%;
     margin: auto;
     overflow: auto;
-    /* background: url("Images/main_2_stars.svg");
-    background-size: cover; */
 }
 
 #title{
@@ -45,7 +41,6 @@ body{
     top: 30%; 
     width: 100%;
     opacity: 0;
-
 }
 
 #slogan{
@@ -56,7 +51,6 @@ body{
     width: 100%;
     font-style: italic;
     opacity: 0;
-
 }
 
 #test{
@@ -68,18 +62,20 @@ body{
     display: flex;
     left: 50%;
     top: 50%; 
-    /* https://css-tricks.com/quick-css-trick-how-to-center-an-object-exactly-in-the-center/ */
     /* The translate() CSS function repositions an element in the horizontal and/or vertical directions. */
     transform: translate(-50%, -50%);
-    /* content: url("Images/ovalOrange.svg"); */
 }  
 
 .options {
     background: #f7f7f5;
+    /* display: flex;
+    vertical-align: middle;
+    justify-content: center; */
     display: none;
     text-align: center;
     vertical-align: middle;
     position: absolute;
+    /* transform: translateX(-50%) translateY(-50%); */
     width: 100%;
     /* vertically & horizontally middle */
     left: 50%;
@@ -90,8 +86,9 @@ body{
     border-color: #F3C78D;
 }
 
-.options span {
-    color: #000000;
+/* text in circle */
+.options > p {
+    color: black;
     text-align: center;
     vertical-align: middle;
     position: absolute;
@@ -102,6 +99,26 @@ body{
     transform: translateX(-50%) translateY(-50%);
 }
 
+/* .options span {
+    color: #000000;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    width: 100%;
+    top: 50%; 
+    left: 50%; 
+    transform: translateX(-50%) translateY(-50%);
+} */
+
+.langBtn {
+    color: white;
+    background-color: transparent;
+    border-radius: 20%;
+    border-style: solid;
+    border-color: #F3C78D;
+}
+
+/* Making a circle */
 #option1{
     transform: translate(-100%, -150%);
 }
@@ -122,96 +139,541 @@ body{
     transform: translate(15%, -150%);
 }
 
-#withoutInput:active{
-    background-color: red!important;
-}
-
-/* smartphones including iPhone 5 */
-@media screen and (min-width : 0px) {
-    #title{
-        font-size: 20px;
-    }
-    #slogan{
-        font-size: 14px;
-    }
-    .options {
-        width: 60px;
-        height: 60px;
+/* 1) smartphones including iPhone 5 (320 x 568) */
+@media screen and (min-width : 0px) and (min-height: 0px) {
+    .langBtn {
         font-size: 12px;
     }
-}
-
-/* Galaxy S5 */
-@media screen and (min-width : 360px) {
+    body{
+        background: url("Images/main_1_cover.svg") center center fixed;
+        background-size: cover;
+    }
+    /* loading animation */
     #title{
         font-size: 25px;
     }
     #slogan{
+        font-size: 16px;
+    }
+    .options{
+        width: 60px;
+        height: 60px;
+        font-size: 12px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 200px !important;
+        transform: translate(0, -105%);
+        padding: 10px 10px 15px 10px !important; 
+    }
+    .swal2-cancel-msg{
+        width: 150px !important;
+        transform: translate(0, -115%);
+        padding: 10px 0 13px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 190px !important;
+        /* can't use "transform": the move from middle to the translated location is shown. */
+        /* transform: translate(0, -50%); */
+        padding: 0 5px 13px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        padding: 14px 12px 14px 12px !important;             
+    }
+    .swal2-header #swal2-title{
         font-size: 20px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        /* top, right, bottom, left  */
+        margin: 0 !important;
+        padding: 12px !important;
+        margin: 7px 0 7px 0 !important;
+        font-size: 16px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 16px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 13px !important;
+    }
+    .swal2-image{
+        width: auto;
+        height: auto;
+        margin: 0 0 10px 0 !important;
+    }
+    .swal2-animate-success-icon{
+        margin: 10px 10px 15px 10px !important;        
+    }
+    .swal2-actions{
+        width: auto;
+        height: auto;
+        margin: 10px auto 0 auto !important;
+    }
+    /* .swal2-confirm is the "confirm" button at the bottom. */
+    .swal2-actions .swal2-confirm{
+        width: auto;
+        height: auto;
+        padding: 5px 5px 5px 5px !important;
+        margin: 0 !important;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 13px;
+    }
+    /* .swal2-cancel is the "cancel" button at the bottom. */
+    .swal2-actions .swal2-cancel{
+        width: auto;
+        height: auto;
+        padding: 5px 5px 5px 5px !important;
+        /* top, right, bottom, left  */
+        margin: 0 0 0 10px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 13px;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(0.8);
+    }
+    /* SweetAlert2 popup message END */
+}
+
+/* 2) Galaxy S5 (360 x 640) */
+@media screen and (min-width : 360px) and (min-height: 640px) {
+    .langBtn {
+        font-size: 13px;
+    }
+    /* loading animation */
+    #title{
+        font-size: 28px;
+    }
+    #slogan{
+        font-size: 19px;
     }
     .options {
         width: 70px;
         height: 70px;
         font-size: 13px;
     }
-}
-
-/* iPhones 6/7/8 */
-@media screen and (min-width : 375px) {
-    #title{
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 220px !important;
+        transform: translate(0, -102%);
+    }
+    .swal2-cancel-msg{
+        transform: translate(0, -135%);
+    }
+    .swal2-cancel-confirm-msg{
+        width: 200px !important;
+    }
+    .swal2-header #swal2-title{
+        font-size: 21px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        font-size: 17px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 17px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 14px !important;
+    }
+    .swal2-image{
         font-size: 20px;
     }
-    #slogan{
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
         font-size: 14px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 12px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 14px;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(0.9);
+    }    
+    /* SweetAlert2 popup message END */
+}
+
+/* 3) iPhones 6/7/8 (375 x 667) */
+@media screen and (min-width : 375px) and (min-height: 667px) {
+    .langBtn {
+        font-size: 14px;
+    }
+    /* loading animation */
+    #title{
+        font-size: 31px;
+    }
+    #slogan{
+        font-size: 22px;
     }
     .options {
         width: 75px;
         height: 75px;
         font-size: 14px;
     }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 230px !important;
+        transform: translate(0, -112%);
+    }
+    .swal2-cancel-msg{
+        width: 160px !important;
+        transform: translate(0, -127%);
+        padding: 13px 0 16px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 210px !important;
+        padding: 8px 5px 16px 5px !important; 
+    }
+    .swal2-header #swal2-title{
+        font-size: 23px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        font-size: 18px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 18px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 16px !important;
+    }
+    #swal2-content{
+        font-size: 17px;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 16px;
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 16px;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(1.0);
+    }        
+    /* SweetAlert2 popup message END */
 }
 
-/* iPhones 6/7/8 plus */
-@media screen and (min-width : 414px) {
+/* 4) iPhone X (375 x 812) */
+@media screen and (min-width : 375px) and (min-height : 812px) {
+    .langBtn {
+        font-size: 16px;
+    }
+    /* loading animation */
     #title{
-        font-size: 22px;
+        font-size: 33px;
     }
     #slogan{
-        font-size: 16px;
+        font-size: 24px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 250px !important;
+        transform: translate(0, -122%);
+    }
+    .swal2-cancel-msg{
+        width: 180px !important;
+        padding: 13px 0 18px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 246px !important;
+        padding: 6px 5px 19px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        padding: 22px 12px 22px 12px !important;             
+    }
+    .swal2-image{
+        transform: scale(1.2);
+        margin: 10px 0 10px 0 !important;  
+    }
+    .swal2-header #swal2-title{
+        font-size: 26px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        font-size: 21px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 21px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 17px !important;
+    }    
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 17px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 15px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 17px;
+    }
+    /* SweetAlert2 popup message END */
+}
+
+/* 5) iPhones 6/7/8 plus (414 x 746) */
+@media screen and (min-width : 414px) {
+    .langBtn {
+        font-size: 18px;
+    }
+    /* loading animation */
+    #title{
+        font-size: 36px;
+    }
+    #slogan{
+        font-size: 25px;
     }
     .options {
         width: 80px;
         height: 80px;
         font-size: 15px;
     }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 270px !important;
+        transform: translate(0, -114%);
+        padding: 15px 10px 15px 10px !important; 
+    }
+    .swal2-cancel-msg{
+        width: 190px !important;
+    }
+    .swal2-cancel-confirm-msg{
+        width: 254px !important;
+        padding: 6px 5px 20px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        padding: 24px 12px 22px 12px !important;             
+    }
+    .swal2-image{
+        transform: scale(1.2);
+    }
+    .swal2-header #swal2-title{
+        font-size: 27px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        font-size: 22px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 22px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 18px !important;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 18px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 18px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 18px;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(1.1);
+    }       
+    /* SweetAlert2 popup message END */
 }
 
-/* iPads */
-@media screen and (min-width : 768px) {
+/* 6) iPad (768 x 1024) */
+@media only screen and (min-width : 768px) and (min-height: 1024px) {
+    .langBtn {
+        font-size: 25px;
+    }
+    /* loading animation */    
     #title{
-        font-size: 35px;
+        font-size: 60px;
     }
     #slogan{
-        font-size: 24px;
+        font-size: 40px;
     }
     .options {
-        width: 110px;
-        height: 110px;
-        font-size: 20px;
+        width: 120px;
+        height: 120px;
+        font-size: 23px;
     }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 350px !important;
+        transform: translate(0, -127%);
+    }
+    .swal2-cancel-msg{
+        width: 240px !important;
+        transform: translate(0, -140%);
+        padding: 15px 0 22px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 340px !important;
+        padding: 31px 5px 31px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        padding: 24px 24px 22px 24px !important;             
+    }
+    .swal2-header #swal2-title{
+        font-size: 39px !important;  
+        /* top, right, bottom, left  */
+        margin: 0 0 13px 0 !important;  
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        /* top, right, bottom, left  */
+        margin: 17px 0 17px 0 !important;
+        font-size: 30px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 30px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 26px !important;
+    }
+    .swal2-image{
+        transform: scale(1.5);
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 26px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 20px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 26px;
+    }
+    .swal2-actions{
+        margin: 13px auto 0 auto !important;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(1.3);
+    }     
+    /* SweetAlert2 popup message END */
 }
 
-/* Desktops and laptops */
-@media screen and (min-width : 1024px) {
+/* 7) iPad Pro (1024 x 1366) */
+@media only screen and (min-width : 1024px) and (min-height: 1366px) {
+    .langBtn {
+        font-size: 33px;
+    }
+    /* loading animation */
     #title{
-        font-size: 43px;
+        font-size: 80px;
     }
     #slogan{
-        font-size: 35px;
+        font-size: 50px;
     }
     .options {
         width: 170px;
         height: 170px;
         font-size: 30px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 500px !important;
+        transform: translate(0, -110%);
+        padding: 33px 5px 27px 5px !important; 
+    }
+    .swal2-cancel-msg{
+        width: 330px !important;
+        transform: translate(0, -130%);
+        padding: 37px 0 25px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 450px !important;
+        padding: 54px 5px 32px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        width: 750px !important;
+        padding: 20px 30px 30px 30px !important;             
+    }
+    .swal2-image{
+        transform: scale(2.2);
+        padding: 17px 5px 17px 5px !important; 
+    }
+    .swal2-header #swal2-title{
+        font-size: 50px !important;  
+        /* top, right, bottom, left  */
+        padding: 13px 0 13px 0 !important;  
+        margin: 13px 0 0 0 !important;  
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        /* top, right, bottom, left  */
+        /* margin: 17px 0 17px 0 !important; */
+        font-size: 37px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 37px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 33px !important;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 33px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 30px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 33px;
+    }
+    .swal2-actions{
+        margin: 18px auto 0 auto !important;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(1.8);
+    }     
+    /* SweetAlert2 popup message END */    
+}
+
+/* 8) Desktop */
+@media screen and (min-width : 630px) {
+    body {
+        /* vh: hundredths of the viewport height. */
+        height:100vh;
+        /* multiple background  */
+        background:
+            /*the main background*/
+            url(Images/main_1_cover.svg) center,
+            url(Images/main_1_cover.svg) 40% 50%,
+            /*repeat the left part*/
+            url(Images/main_1_cover.svg) 30% 50%,
+            url(Images/main_1_cover.svg) 20% 50%,
+            url(Images/main_1_cover.svg) 10% 50%,
+            url(Images/main_1_cover.svg) 0% 50%,
+            /*repeat the right part*/
+            url(Images/main_1_cover.svg) 60% 50%,
+            url(Images/main_1_cover.svg) 70% 50%,
+            url(Images/main_1_cover.svg) 80% 50%,
+            url(Images/main_1_cover.svg) 90% 50%,
+            url(Images/main_1_cover.svg) 100% 50%;
+        background-repeat:no-repeat;
+        background-size:contain;         
+    }
+    #fallingStars{
+        object-position: top 50%;
     }
 }
