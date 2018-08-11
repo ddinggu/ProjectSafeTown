@@ -6,83 +6,95 @@ $(window).on('load', function(){
     $.get('/testimportcctv', function(data) {
         for(var i=0; i < 300; i++){
             var cctvLocation = data[i]['geometry']['coordinates'];
-            createMaker(cctvLocation);
+            createCCTVMaker(cctvLocation);
         }
     })
+
     if (!navigator.geolocation){
         return;
     }
-    else navigator.geolocation.getCurrentPosition(userLocateAcceptSuccess, userLocateAcceptFailed, userLocateOption)
+    else navigator.geolocation.getCurrentPosition(userLocateAcceptSuccess, userLocateAcceptFailed, excuteLocationOption())
 });
+
+function excuteLocationOption(){
+    var userLocateOption = {
+        enableHighAccuracy: false,
+        maximumAge: 0,
+        timeout: Infinity
+    }
+    return userLocateOption;
+}
 
 // 기본 위치인 서울시청으로 먼저 맵을 뿌려준다
 // 만약 기본 맵이 뿌려지지 않는다면, scope로 인해 Map object를 이용한 모든 method를 사용할 수 없다.
-var defaultLoaction = new naver.maps.LatLng(37.5666805, 126.9784147);
-
-var mapOption = {
-    center: defaultLoaction,
-    zoom: 11,
-    mapTypeId: naver.maps.MapTypeId.NORMAL,
-    minZoom : 9,
-    maxZoom : 15
- };
-
-var map = new naver.maps.Map('map', mapOption);
+var map = new naver.maps.Map('map', 
+               {
+                zoom: 11,
+                mapTypeId: naver.maps.MapTypeId.NORMAL,
+                minZoom : 9,
+                maxZoom : 15
+               }
+);
 
 //-------------------------- GPS(사용자 위치 파악) 버튼 생성 --------------------------------
-// customControler 제작
-var locationBtnHtml = '<a href="#" class="btn_mylct"><img src="../image/position.png" width="40px" height="40px"></img></a>';
 
 //customControl 객체를 이용하여 gps 활성화 및 위치 이동
-var gpsControler = new naver.maps.CustomControl(locationBtnHtml, {
-    position: naver.maps.Position.RIGHT_TOP
-});
+(function attachGpsController(){
+    var locationBtnHtml = '<a href="#" class="btn_mylct"><img src="../image/position.png" width="40px" height="40px"></img></a>';
 
-gpsControler.setMap(map);
+    var gpsControler = new naver.maps.CustomControl(locationBtnHtml, {
+        position: naver.maps.Position.RIGHT_TOP
+    });
 
-naver.maps.Event.addDOMListener(gpsControler.getElement(), 'click', function() {
-    navigator.geolocation.getCurrentPosition(userLocateAcceptSuccess, userLocateAcceptFailed, userLocateOption);
-});
+    gpsControler.setMap(map);
 
-var zoomControl = new naver.maps.ZoomControl({
-    style: naver.maps.ZoomControlStyle.SMALL,
-    position: naver.maps.Position.RIGHT_TOP
-});
+    naver.maps.Event.addDOMListener(gpsControler.getElement(), 'click', function() {
+        console.log('gps click event');
+        
+        navigator.geolocation.getCurrentPosition(userLocateAcceptSuccess, userLocateAcceptFailed, excuteLocationOption());
+    });
+})();
 
-zoomControl.setMap(map);
+// 순서상 문제에 의해 줌 컨트롤러를 map 객체에서 이용하는 것이 아닌, 뒤에서 따로 설정해준다.
+(function attachZoomController(){
+    var zoomControl = new naver.maps.ZoomControl({
+        style: naver.maps.ZoomControlStyle.SMALL,
+        position: naver.maps.Position.RIGHT_TOP
+    });
+
+    zoomControl.setMap(map);
+})();
 
 //----------- 사용자가 움직이는 방향 테스팅 -----------------------------
 
-// customControler 제작
-var headingBtnHtml = '<a href="#" class="btn_mylct"><img src="../image/sally.png" width="40px" height="40px"></img></a>';
+(function userMovingDirectionTester(){
+    var headingBtnHtml = '<a href="#" class="btn_mylct"><img src="../image/sally.png" width="40px" height="40px"></img></a>';
 
-//customControl 객체를 이용하여 gps 활성화 및 위치 이동
-var headingControler = new naver.maps.CustomControl(headingBtnHtml, {
-    position: naver.maps.Position.LEFT_CENTER
-});
+    //customControl 객체를 이용하여 gps 활성화 및 위치 이동
+    var headingControler = new naver.maps.CustomControl(headingBtnHtml, {
+        position: naver.maps.Position.LEFT_CENTER
+    });
 
-headingControler.setMap(map);
+    headingControler.setMap(map);
 
-naver.maps.Event.addDOMListener(headingControler.getElement(), 'click', function() {
-    navigator.geolocation.getCurrentPosition(heading_success, heading_error, userLocateOption);
-});
+    naver.maps.Event.addDOMListener(headingControler.getElement(), 'click', function() {
+        navigator.geolocation.getCurrentPosition(heading_success, heading_error, excuteLocationOption());
+    });
+})();
 
 function heading_success(position) {
     alert('이동 방향 : ' + position.heading+' | 이동 속도 : '+ position.speed);
-  }
+}
 
-  function heading_error() {
+function heading_error() {
     alert("위치 정보를 사용할 수 없습니다.");
-  }
-
-
+}
 
 //-------------------------- GPS(사용자 위치 파악) 버튼 생성 끝 --------------------------------
 
-
 // 초기 마커 생성(scope 문제때문에 초기에 생성해줘야한다.)
 var marker = new naver.maps.Marker({
-    position : defaultLoaction,
+    position : new naver.maps.LatLng(37.5666805, 126.9784147),
     map : map,
     icon: {
         title : 'User Click marker',
@@ -90,8 +102,7 @@ var marker = new naver.maps.Marker({
                    '<img src="../image/orangespot.png" alt="" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none;">'
                     +'</div>',
         size: new naver.maps.Size(30, 40),
-        origin: new naver.maps.Point(0, 0),
-        animation: naver.maps.Animation.BOUNCE
+        origin: new naver.maps.Point(0, 0)
     }
 });
 
@@ -104,7 +115,7 @@ var marker = new naver.maps.Marker({
     window.lat = e.coord._lat;
     window.lng = e.coord._lng;
     window.locationId = parseFloat(e.coord._lat) + parseFloat(e.coord._lng);
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
     deleteLocationInfo();
 });
 
@@ -114,28 +125,24 @@ naver.maps.Event.addListener(marker, 'click', function(e) {
     map.setZoom(14);
     map.setCenter(marker.getPosition());
 
-    if(!$('.options').length) showLocationInfo();
+    if(!$('.options').length) showLocationInfo('#orangeMarker');
     else deleteLocationInfo();
-
-    console.log(e);
 });
 
 //-------------------------------- 기본적인 마커와 Map 생성 끝 ------------------------
 
 //------------------ 드래그 할때마다 유동적으로 CCTV 정보를 불러오기 위한 설정---------------
-
-// 동적 마커 표시 역활( 클릭시 마커를 움직이게 하기 위한 필요 도구 )
+// 동적 마커 표시 역활( 드래그할때 마커를 움직이게 하기 위해 마커를 담아 놓는 리스트 )
 var markers = [];
 // 위도, 경도에 따른 셀리 마커를 찍는 함수
-function createMaker(location){
+function createCCTVMaker(location){
     var marker = new naver.maps.Marker({
          position: new naver.maps.LatLng(location[1], location[0]),
          map: map,
          icon: {
             url: '/image/sally.png',
             size: new naver.maps.Size(30, 32),
-            origin: new naver.maps.Point(0, 0),
-            anchor: new naver.maps.Point(25, 26)
+            origin: new naver.maps.Point(0, 0)
              }
     });
 
@@ -172,9 +179,19 @@ function hideMarker(map, marker) {
 
 //-------------------------- 유동적인 CCTV 마커 불러오기 끝----------------------------
 
-//---------------------------- 위치정보 처리 변수 --------------------------------
+//---------------------------- 위치정보 처리 function 설정 --------------------------------
  function userLocateAcceptSuccess(position){
-    
+    // 위치가 업로드 될 때, 기존의 마커를 제거하기 위한 방법. ( 스코프 문제 발생 )
+    function removeNowLocation(){
+        console.log(mylocation);
+        mylocation.setMap(null);
+    }
+
+    (function(){
+        if(mylocation) removeNowLocation;
+        else return;
+    })();
+
     // 좌표 불러오기
     var latitude  = position.coords.latitude;
     var longitude = position.coords.longitude;
@@ -196,10 +213,6 @@ function hideMarker(map, marker) {
             scaledSize : {width: 22, height: 22} // 이미지의 크기를 조절
              }
     });
-
-    function removeNowLocation(){
-        // 위치가 이동될 시 기존의 마커를 제거하는 함수
-    }
 }
 
 function userLocateAcceptFailed(error){
@@ -210,51 +223,13 @@ function userLocateAcceptFailed(error){
  }
 
 
- var userLocateOption = {
-    enableHighAccuracy: false,
-    maximumAge: 0,
-    timeout: Infinity
-}
-
-//----------------- 위치정보 처리 끝 --------------------------------------
-
-
-//---------------------- 내 좌표 확인 ------------------------------
-// $('#clicklocate').on('click', geoFindMe);
-
-// function geoFindMe() {
-//     var $output = $("#out");
-
-//     if (!navigator.geolocation){
-//       $output.html("<p>사용자의 브라우저는 지오로케이션을 지원하지 않습니다.</p>");
-//       return;
-//     }
-
-//     function success(position) {
-//         var latitude  = position.coords.latitude;
-//         var longitude = position.coords.longitude;
-
-//       $output.html('<p>위도 : ' + latitude + '° <br>경도 : ' + longitude + '°</p>');
-
-//     };
-
-//     function error() {
-//       $output.html("사용자의 위치를 찾을 수 없습니다.");
-//     };
-
-//     $output.html("<p>Locating…</p>");
-
-//     navigator.geolocation.getCurrentPosition(success, error);
-//   }
-//---------------------- 내 좌표 확인 끝 ------------------------------
-
 // 선택 박스 5개 생성 및 삭제 함수
-function showLocationInfo(){
-    $('#orangeMarker').after($('<div class="options withoutInput" id="option1"><span>인적이<br>드물어요</span></div>'));
-    $('#orangeMarker').after($('<div class="options withoutInput" id="option2"><span>어두워요</span></div>'));
-    $('#orangeMarker').after($('<div class="options withoutInput" id="option3"><span>사고가<br>난 적<br>있어요</span></div>'));
-    $('#orangeMarker').after($('<div class="options withoutInput" id="option4"><span>유흥가에요</span></div>'));
-    $('#orangeMarker').after($('<div class="options withInput" id="option5"><span>기타</span></div>'));  
+function showLocationInfo(parent){
+    $(parent).after($('<div class="options withoutInput" id="option1"><span>인적이<br>드물어요</span></div>'));
+    $(parent).after($('<div class="options withoutInput" id="option2"><span>어두워요</span></div>'));
+    $(parent).after($('<div class="options withoutInput" id="option3"><span>사고가<br>난 적<br>있어요</span></div>'));
+    $(parent).after($('<div class="options withoutInput" id="option4"><span>유흥가에요</span></div>'));
+    $(parent).after($('<div class="options withInput" id="option5"><span>기타</span></div>'));  
 }
 
 function deleteLocationInfo() {
