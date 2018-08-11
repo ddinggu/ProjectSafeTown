@@ -86,6 +86,10 @@ body{
     border-color: #F3C78D;
 }
 
+.toggleEffect{
+    background : #F3C78D;
+}
+
 /* text in circle */
 .options > p {
     color: black;

@@ -1,27 +1,31 @@
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongo Atlas server url';
+module.exports = function(app, User, config){
+    const MongoClient = require('mongodb').MongoClient;
+    const url = config.mongoUrl;
 
+    //default 화면
+    app.get('/',function(req,res){
+        res.render('load', {title:"My homepage", length:5});
+    });  
 
-module.exports = function(app,fs){
-  //default 화면
-  app.get('/',function(req,res){
-    res.render('index', {title:"My homepage", length:5});
-  });  
+    app.get('/main',function(req,res){
+        res.render('index', {title:"My homepage", naverToken : config.naverToken});
+    });  
 
-  // Import cctv data router
-  app.get('/testimportcctv', (req, res) => {
-        MongoClient.connect(url, (err, client) => {
-            var db = client.db("cctv");
-            var cursor = db.collection('geoSeoulcctv').find({});
-            cursor.toArray((err, item) => {
+    // Import cctv data router
+    app.get('/testimportcctv', function(req, res) {
+            MongoClient.connect(url, function(err, client) {
                 if(err) console.log(err);
-                else {
-                    res.send(item);
-                    client.close();
-                }
-            })
-        });
+                var db = client.db("cctv");
+                var cursor = db.collection('geoSeoulcctv').find({});
+                cursor.toArray( function(err, item) {
+                    if(err) console.log(err);
+                    else {
+                        res.send(item);
+                        client.close();
+                    }
+                })
+            });
     });
 
-  
-}
+
+}// end point

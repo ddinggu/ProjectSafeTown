@@ -15,9 +15,10 @@ module.exports = function(app, User) {
                         let property = Object.keys(err.errors)[0];
                         res.send(err.errors[property]['message']);
                     } 
+                    req.session.email = validator.email_address;
                     res.send(`확인 완료! DB 확인해보세요. 
                               쿠키 : ${req.session}
-                              세션 : ${req.session.email_address}`);
+                              세션 : ${req.session.email}`);
                 })
             }
         })
@@ -32,15 +33,17 @@ module.exports = function(app, User) {
             
         User.findOne(validator, function(err, member) {
             if(err) res.send(err);
-            if(!member) res.send('아이디가 틀렸습니다.')
+            if(!member) res.send(`아이디가 틀렸습니다. 
+                                 세션 : ${req.session.email_address}`)
             else{
                 member.checkPassword(inputPassword, function(err, isMatch) {
                     if(err) res.send(err);
                     if(isMatch) {
                         req.session.email = body.email_address;
-                        res.send('로그인 되었습니다.');
+                        res.send(`로그인 되었습니다.
+                            세션 : ${req.session.email}`);
                     }
-                    else res.send('비밀번호가 틀렸습니다.')
+                    else res.send('비밀번호가 틀렸습니다.' + body.pasword)
                 })
             }
         })
@@ -69,6 +72,7 @@ module.exports = function(app, User) {
         })
     })
 
+    // 로그아웃 페이지를 임시적으로 생성
     app.get('/logout', function(req, res){
         res.send(`
         <h1>logout</h1>
@@ -101,5 +105,32 @@ module.exports = function(app, User) {
             }
         })
     })
+
+
+    // 버튼 클릭시 회원 DB로 선택 데이터 전송
+    app.post('/pushDangerSpot', function(req, res){
+        let query = {email_address : req.session.email};
+        let calledData = {locationId : req.body.locationId,
+                          geolocation : req.body.geolocation,
+                          dangerInfo : req.body.dangerData,
+                          flag : parseInt(req.body.flag)};
+        console.log(calledData.locationId);
+    
+        User.findOne(query, function(err, member){
+            if(err) res.send(err);
+            if(!member) res.send('쿼리에러(세션에 회원정보가 없거나, DB에 맞는 회원정보가 없음)');
+            else {
+                if(calledData.flag){
+                    member.addDangerLocationInfo(calledData);
+                    res.send('DB 등록 확인필요!');
+                } 
+                else {
+                    member.removeDangerLocationInfo(calledData);
+                    res.send('DB 삭제 확인필요!');
+                }
+            }
+        });
+    });
+
 
 }// end
