@@ -18,7 +18,7 @@ db.once('open', function(){
 
 //--------------------- 회원 스키마 설정 ---------------------------
 const subSchema = new Schema({
-    id : Double,
+    id : String,
     geometry : {
         type : {type : String, default : 'Point'},
         coordinates : [Double,Double]
@@ -85,6 +85,12 @@ userSchema.methods.checkPassword = function(guess, cb){
         cb(null, isMatched);
     })
 };
+
+userSchema.methods.findOverlapLocationId = function(locationId, userChoose){
+   return this.dangerLocation.some(function(el) {
+        return (el.id === locationId) && (el.properties.locationOpinon !== userChoose) ;
+    });
+}
 
 // 위험지역정보를 추가 및 삭제하는 메소드를 스키마에 추가 
 
