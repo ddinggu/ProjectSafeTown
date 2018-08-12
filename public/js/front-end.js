@@ -1,3 +1,4 @@
+// 언어 설정을 위한 데이터 변수 설정 
 var arrLang = {
     "en-us": {
         "tabTitle": "SaferTrip",
@@ -80,7 +81,7 @@ $(document).ready(function() {
 
     // // * language setting START
     $(".lang").each(function(index, element) {
-        $(this).text(arrLang[lang][$(this).attr("key")]);
+        $(this).text(arrLang[lang][$(this).attr("key")]);  // 이미 저장된 요소들의 key값에 대칭 되는 object의 value들을 가져온다. 
     });
       
     // // get/set the selected language
@@ -96,7 +97,7 @@ $(document).ready(function() {
                     // console.log( localStorage.getItem('uiLang') );
                 }
                 $(".lang").each(function(index, element) {
-                  $(this).text(arrLang[lang][$(this).attr("key")]);
+                  element.text(arrLang[lang][$(this).attr("key")]); 
                 });
     // // * language setting END
             }
@@ -451,8 +452,8 @@ $(document).ready(function() {
     // "test" click function END
 
     // // redirect loading page(/) to main page(/main) via button event: Gi-baek
-    $("body").click(function(){
-        window.location = window.location + "main";
-    });
+    // $("body").click(function(){
+    //     window.location = window.location + "main";
+    // });
 })
 // "document ready" function END
