@@ -68,7 +68,7 @@ var map = new naver.maps.Map('map',
 //----------- 사용자가 움직이는 방향 테스팅 -----------------------------
 
 (function userMovingDirectionTester(){
-    var headingBtnHtml = '<a href="#" class="btn_mylct"><img src="../image/sally.png" width="40px" height="40px"></img></a>';
+    var headingBtnHtml = '<a href="#" class="btn_mylct sally"><img src="../image/safeDot.png" width="40px" height="40px"></img></a>';
 
     //customControl 객체를 이용하여 gps 활성화 및 위치 이동
     var headingControler = new naver.maps.CustomControl(headingBtnHtml, {
@@ -140,7 +140,9 @@ function createCCTVMaker(location){
          position: new naver.maps.LatLng(location[1], location[0]),
          map: map,
          icon: {
-            url: '/image/sally.png',
+            content : '<div id="safeDot">'+
+                  '<img src="../image/safeDot.png" alt="" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none;">'
+                   +'</div>',
             size: new naver.maps.Size(30, 32),
             origin: new naver.maps.Point(0, 0)
              }
