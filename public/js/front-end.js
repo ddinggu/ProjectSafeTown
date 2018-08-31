@@ -19,17 +19,6 @@ var arrLang = {
         "cancelMsgTitle" : 'Are you sure?',
         "cancelConfirmMsgTitle" : 'Recorded!',
         "cancelConfirmMsgText" : 'Your input has been deleted.',
-        "tutorial1" : "Areas that CCTV cover are marked with green circles.",
-        "tutorial2-1" : "Crime-ridden areas are marked with orange circles.",
-        "tutorial2-2" : "You can participate in reporting crime-ridden areas.",
-        "tutorial3" : "Please tap where you feel unsafe.",
-        "tutorial4-1" : "Orange location icon is appeared.",
-        "tutorial4-2" : "Tap the icon!",
-        "tutorial5-1" : "Find a safer path",
-        "tutorial5-2" : "You can find a safer path more likely to be covered by CCTVs and/or less likely to be reported as crime-ridden areas.",
-        "menu1" : "Introduction",
-        "menu2" : "How to Use",
-        "menu3" : "Ratings & Reviews"
     },
     "ko": {
         "tabTitle": "야옹씨의 안전한 하루",
@@ -50,18 +39,7 @@ var arrLang = {
         "textboxMsgValidationMsg" : "입력하신 의견이에요",
         "cancelMsgTitle" : '삭제하실건가요?',
         "cancelConfirmMsgTitle" : '기록되었습니다!',
-        "cancelConfirmMsgText" : '의견이 삭제되었습니다.',
-        "tutorial1" : "CCTV가 설치되어있는 곳 초록색으로 표시되어있어요.",
-        "tutorial2-1" : "위험하게 느껴지는 곳 주황색으로 표시되어있어요.",
-        "tutorial2-2" : "여러분이 직접 표시 할 수 있어요.",
-        "tutorial3" : "길을 가다 위험해보이는 곳이 있다 눌러주세요.",
-        "tutorial4-1" : "주황색 위치 아이콘이 생겼어요.",
-        "tutorial4-2" : "아이콘을 눌러보세요!",
-        "tutorial5-1" : "안전길찾기",
-        "tutorial5-2" : "CCTV가 설치되어 있거나 위험하게 느껴지는 곳을 최대한 피한 안전한 길로 안내 받을 수 있어요.",
-        "menu1" : "소개",
-        "menu2" : "사용방법",
-        "menu3" : "사용후기"
+        "cancelConfirmMsgText" : '의견이 삭제되었습니다.'
     }
 };
 
@@ -450,7 +428,7 @@ $(document).ready(function() {
     });   
     // "test" click function END
 
-    // // redirect loading page(/) to main page(/main) via button event: Gi-baek
+    // redirect loading page(/) to main page(/main) via button event: Gi-baek
     $("body").click(function(){
         window.location = window.location + "main";
     });
