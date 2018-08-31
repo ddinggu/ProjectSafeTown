@@ -112,4 +112,22 @@ module.exports = function(app, User, config){
     });
 
 
+    // 튜토리얼용 데이터 불러오는 라우터 
+    app.get('/tutorialdata', function(req, res) {
+        MongoClient.connect(url, function(err, client) {
+                if(err) console.log(err);
+                var db = client.db("cctv");
+                var cursor = db.collection('users')
+                            .find({"email_address" : "tutorial@naver.com"})
+                            .project({ "_id" : 0, "dangerLocation.geometry.coordinates" : 1});
+                cursor.toArray( function(err, item) {
+                    if(err) console.log(err);
+                    else {
+                        res.send(item);
+                        client.close();
+                    }
+                })
+            });
+    });
+
 }// end point

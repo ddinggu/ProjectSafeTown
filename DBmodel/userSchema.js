@@ -1,7 +1,7 @@
 //------------------ 기본 모듈 및 변수 설정-----------------------
 const mongoose = require('mongoose');
 const Double = require('@mongoosejs/double'); // 좌표값을 double 형식으로 받아오기 위해서 사용
-const bcrypt = require('bcrypt'); // 비밀번호 hash화를 위한 모듈
+// const bcrypt = require('bcrypt'); // 비밀번호 hash화를 위한 모듈
 const Schema = mongoose.Schema;
 const saltRounds = 10; // hash화 하기 위한 salt 값 지정
 const config = require("../config/config.json"); // hidden Url
@@ -61,31 +61,31 @@ const userSchema = new Schema({
 // 모델에 저장되기 전에 해쉬를 적용한 비밀번호로 저장
 // pre hook이 진행된후 post hook이 진행된다.
 
-userSchema.pre('save', function(next) {
-    let user = this;
+// userSchema.pre('save', function(next) {
+//     let user = this;
 
-    bcrypt.genSalt(saltRounds, function(err, salt) {
-        if(err) next(err);
-        bcrypt.hash(user.password, salt, function(err, hashed) {
-            if(err) next(err);
-            else{
-                user.password = hashed;
-                next(); // 다음 미들웨어로 진행시킨다. (미들웨어의 실행진행순서를 파악할 수 있다.)
-            }
-        });
-    });
-});
+//     bcrypt.genSalt(saltRounds, function(err, salt) {
+//         if(err) next(err);
+//         bcrypt.hash(user.password, salt, function(err, hashed) {
+//             if(err) next(err);
+//             else{
+//                 user.password = hashed;
+//                 next(); // 다음 미들웨어로 진행시킨다. (미들웨어의 실행진행순서를 파악할 수 있다.)
+//             }
+//         });
+//     });
+// });
 
 // 비밀번호를 검사하는 메소드를 스키마에 추가
 // cb : 콜백함수 --> 다음에 지정하는 콜백함수를 실행하게 된다!!!!
-userSchema.methods.checkPassword = function(guess, cb){
-    let user = this;
+// userSchema.methods.checkPassword = function(guess, cb){
+//     let user = this;
 
-    bcrypt.compare(guess, user.password, function(err, isMatched){
-        if(err) cb(err);
-        cb(null, isMatched);
-    })
-};
+//     bcrypt.compare(guess, user.password, function(err, isMatched){
+//         if(err) cb(err);
+//         cb(null, isMatched);
+//     })
+// };
 
 userSchema.methods.findOverlapLocationId = function(locationId, userChoose){
    return this.dangerLocation.some(function(el) {

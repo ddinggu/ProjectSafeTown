@@ -118,7 +118,7 @@ map = new naver.maps.Map('map',
 //----------- 사용자가 움직이는 방향 테스팅 -----------------------------
 
 (function userMovingDirectionTester(){
-    var headingBtnHtml = '<a href="#" class="btn_mylct"><img src="../image/sally.png" width="40px" height="40px"></img></a>';
+    var headingBtnHtml = '<a href="#" class="btn_mylct sally"><img src="../image/safeDot.png" width="40px" height="40px"></img></a>';
 
     //customControl 객체를 이용하여 gps 활성화 및 위치 이동
     var headingControler = new naver.maps.CustomControl(headingBtnHtml, {

@@ -117,7 +117,7 @@ body{
     transform: translateX(-50%) translateY(-50%);
 } */
 
-.langBtn {
+.langBtnMain {
     color: white;
     background-color: transparent;
     border-radius: 20%;
