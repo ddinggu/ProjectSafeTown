@@ -19,6 +19,7 @@ db.once('open', function(){
 //--------------------- 회원 스키마 설정 ---------------------------
 const subSchema = new Schema({
     id : String,
+    options : String,
     geometry : {
         type : {type : String, default : 'Point'},
         coordinates : [Double,Double]
@@ -98,7 +99,9 @@ userSchema.methods.addDangerLocationInfo = function(info){
     this.dangerLocation.push({ 
         id : info.locationId,
         geometry : { coordinates : info.geolocation},
-        properties : { locationOpinon : info.dangerInfo}
+        properties : { locationOpinon : info.dangerInfo,
+                       discription : info.dangerDiscription},
+        options : info.options
     }); 
     return this.save();
 }

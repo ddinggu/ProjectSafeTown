@@ -1,6 +1,7 @@
 module.exports = function(app, User, config){
     const MongoClient = require('mongodb').MongoClient;
     const url = config.mongoUrl;
+    const tutorialRoute = config.tutorialUrl;
 
     //default 화면
     app.get('/',function(req,res){
@@ -10,6 +11,24 @@ module.exports = function(app, User, config){
     app.get('/main',function(req,res){
         res.render('index', {title:"My homepage", naverToken : config.naverToken});
     });  
+
+    // Import tutorial data router
+    app.get('/tutorialdata', function(req, res) {
+        MongoClient.connect(tutorialRoute, function(err, client) {
+                if(err) console.log(err);
+                var db = client.db("tutorial");
+                var cursor = db.collection('users')
+                            .find({"email_address" : "tutorial@naver.com"})
+                            .project({ "_id" : 0, "dangerLocation.geometry.coordinates" : 1});
+                cursor.toArray( function(err, item) {
+                    if(err) console.log(err);
+                    else {
+                        res.send(item);
+                        client.close();
+                    }
+                })
+            });
+    });
 
     // Import cctv data router
     app.get('/testimportcctv', function(req, res) {
@@ -26,7 +45,8 @@ module.exports = function(app, User, config){
             })
         });
     });
-
+    
+    // Import logined cctv data router
     app.get('/userimportcctv', function(req, res) {
         console.log(req.session.email);
         if(!req.session.email) res.send(null);
@@ -36,7 +56,8 @@ module.exports = function(app, User, config){
                 var db = client.db("cctv");
                 var cursor = db.collection('users')
                                .find({"email_address" : req.session.email})
-                               .project({ "_id" : 0, "dangerLocation.geometry.coordinates" : 1});
+                               .project({ "_id" : 0, "dangerLocation.geometry.coordinates" : 1, 
+                                          "dangerLocation.id" : 1, "dangerLocation.options" : 1});
                 cursor.toArray( function(err, item) {
                     if(err) console.log(err);
                     else {
@@ -53,53 +74,43 @@ module.exports = function(app, User, config){
     // 따라서, post안에서 조건에 따라 실행되도록 사용하고자 한다. 
     app.post('/dangerSpot', function(req, res){
         let query = {email_address : req.session.email};
+        let dangerDiscription;
+
+        if(!req.body.dangerDiscription) dangerDiscription = 'none';
+        else dangerDiscription = req.body.dangerDiscription;
+        
         let calledData = {locationId : req.body.locationId,
                           geolocation : req.body.geolocation,
                           dangerInfo : req.body.dangerData,
-                          flag : parseInt(req.body.flag)};
+                          flag : parseInt(req.body.flag),
+                          dangerDiscription : dangerDiscription,
+                          options : req.body.options
+                         };
         console.log(calledData.locationId);
-    
+        console.log(`선택한 옵션 : ${calledData.options}`);
+        
         User.findOne(query, function(err, member){
             if(err) res.send(err);
             if(!member) res.send({comment : '쿼리에러(세션에 회원정보가 없거나, DB에 맞는 회원정보가 없음)', 
                                   result : 404 });
-            else {
-                if(!calledData.flag){
-                    member.addDangerLocationInfo(calledData);
-                    res.send({comment : 'DB등록 확인 필요', 
-                            result : 1,
-                            contents : `<div class='userSelect'/>` });
-                } 
-                else {
-                    if(member.findOverlapLocationId(calledData.locationId, calledData.dangerInfo)){
-                        res.send({comment : 'DB데이터 중복', 
-                                  result : 2 });
-                    }
-                    else{
-                        member.removeDangerLocationInfo(calledData);
-                        res.send({comment : 'DB정보 삭제! 확인 필요', 
-                                result : 0 });
-                    }
-                }
+            else if(!calledData.flag){
+                member.addDangerLocationInfo(calledData);
+                res.send({comment : 'DB등록 확인 필요', 
+                            result : 1 });
+            } 
+            // if(member.findOverlapLocationId(calledData.locationId, calledData.dangerInfo)){
+            //     res.send({comment : 'DB데이터 중복', 
+            //                 result : 2 });
+            // }
+            else{
+                member.removeDangerLocationInfo(calledData);
+                res.send({comment : 'DB정보 삭제! 확인 필요', 
+                            result : 0 });
             }
+
         });
     });
 
-    // 로그인된 회원의 DB Location정보로 들어가 id값으로 등록된 위험위치정보를 불러오는 라우터
-    app.get('/spotInfo:/id', function(req, res){
-        let locaId = req.params.id;
-        let query = {email_address : req.session.email};
-
-        User.findOne(query, function(err, member){
-            if(err) console.error(err);
-            let index = member.dangerLocation.findIndex(function(el){
-                            return el.id === locaId;
-                        })
-            let locationOpinon = member.dangerLocation[index].properties.locationOpinon;           
-            
-            res.send(locationOpinon);
-        })
-    });
 
     // 튜토리얼용 데이터 불러오는 라우터 
     app.get('/tutorialdata', function(req, res) {

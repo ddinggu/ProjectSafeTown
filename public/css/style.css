@@ -1,3 +1,10 @@
+/* index.ejs : 메인 페이지를 위한 CSS 모음 */
+
+body{
+  font-style: normal;
+  font-family: 'Poor Story', sans-serif;
+}
+
 #userform{
   background-color: sandybrown;
   z-index: 1;
@@ -7,6 +14,7 @@
     height: 100%;
     position: absolute;
     position: relative; /*Gi-baek*/
+    /* -webkit-filter : grayscale(100%) 화면 색상 반전  */ 
 }
 #userform{
   z-index: 0;
@@ -21,4 +29,495 @@
   margin: 10px;
   border: 2px gray solid;
   padding: 10px;
+}
+
+.options {
+  background: #f7f7f5;
+  /* display: flex;
+  vertical-align: middle;
+  justify-content: center; */
+  /* display: none; */  /* CAUTION!! */
+  text-align: center;
+  vertical-align: middle;
+  position: absolute;
+  /* transform: translateX(-50%) translateY(-50%); */
+  width: 100%;
+  /* vertically & horizontally middle */
+  left: 50%;
+  top: 50%; 
+  /* circle */
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #F3C78D;
+  transition: 
+      background 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1;
+}
+
+.toggleEffect{
+  background : #F3C78D;
+}
+
+.options > p {
+  color: black;
+  text-align: center;
+  vertical-align: middle;
+  position: absolute;
+  width: 100%;
+  /* Center texts inside circles */
+  top: 50%; 
+  left: 50%; 
+  transform: translateX(-50%) translateY(-50%);
+}
+
+/* Making a circle */
+#option1{
+  transform: translate(-100%, -150%);
+}
+
+#option2{
+  transform: translate(-160%, -40%);
+}
+
+#option3{
+  transform: translate(-50%, 50%);
+}
+
+#option4{
+  transform: translate(60%, -40%);
+}
+
+#option5{
+  transform: translate(15%, -150%);
+}
+
+.orangeDot > img{
+    opacity : 0.6
+}
+
+.safeDot > img{
+    opacity: 0.7;
+}
+
+@media screen and (min-width : 0px) and (min-height: 0px) {
+  .options{
+        width: 60px;
+        height: 60px;
+        font-size: 12px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 200px !important;
+        transform: translate(0, -105%);
+        padding: 10px 10px 15px 10px !important; 
+    }
+    .swal2-cancel-msg{
+        width: 150px !important;
+        transform: translate(0, -115%);
+        padding: 10px 0 13px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 190px !important;
+        /* can't use "transform": the move from middle to the translated location is shown. */
+        /* transform: translate(0, -50%); */
+        padding: 0 5px 13px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        padding: 14px 12px 14px 12px !important;             
+    }
+    .swal2-header #swal2-title{
+        font-size: 20px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        /* top, right, bottom, left  */
+        margin: 0 !important;
+        padding: 12px !important;
+        margin: 7px 0 7px 0 !important;
+        font-size: 16px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 16px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 13px !important;
+    }
+    .swal2-image{
+        width: auto;
+        height: auto;
+        margin: 0 0 10px 0 !important;
+    }
+    .swal2-animate-success-icon{
+        margin: 10px 10px 15px 10px !important;        
+    }
+    .swal2-actions{
+        width: auto;
+        height: auto;
+        margin: 10px auto 0 auto !important;
+    }
+    /* .swal2-confirm is the "confirm" button at the bottom. */
+    .swal2-actions .swal2-confirm{
+        width: auto;
+        height: auto;
+        padding: 5px 5px 5px 5px !important;
+        margin: 0 !important;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 13px;
+    }
+    /* .swal2-cancel is the "cancel" button at the bottom. */
+    .swal2-actions .swal2-cancel{
+        width: auto;
+        height: auto;
+        padding: 5px 5px 5px 5px !important;
+        /* top, right, bottom, left  */
+        margin: 0 0 0 10px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 13px;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(0.8);
+    }
+    /* SweetAlert2 popup message END */
+}
+@media screen and (min-width : 360px) and (min-height: 640px) {
+      .options {
+        width: 70px;
+        height: 70px;
+        font-size: 13px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 220px !important;
+        transform: translate(0, -102%);
+    }
+    .swal2-cancel-msg{
+        transform: translate(0, -135%);
+    }
+    .swal2-cancel-confirm-msg{
+        width: 200px !important;
+    }
+    .swal2-header #swal2-title{
+        font-size: 21px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        font-size: 17px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 17px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 14px !important;
+    }
+    .swal2-image{
+        font-size: 20px;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 14px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 12px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 14px;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(0.9);
+    }    
+    /* SweetAlert2 popup message END */
+}
+@media screen and (min-width : 375px) and (min-height: 667px) {
+  .options {
+        width: 75px;
+        height: 75px;
+        font-size: 14px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 230px !important;
+        transform: translate(0, -112%);
+    }
+    .swal2-cancel-msg{
+        width: 160px !important;
+        transform: translate(0, -127%);
+        padding: 13px 0 16px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 210px !important;
+        padding: 8px 5px 16px 5px !important; 
+    }
+    .swal2-header #swal2-title{
+        font-size: 23px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        font-size: 18px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 18px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 16px !important;
+    }
+    #swal2-content{
+        font-size: 17px;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 16px;
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 16px;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(1.0);
+    }        
+    /* SweetAlert2 popup message END */
+}
+@media screen and (min-width : 375px) and (min-height : 812px) {
+   /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 250px !important;
+        transform: translate(0, -122%);
+    }
+    .swal2-cancel-msg{
+        width: 180px !important;
+        padding: 13px 0 18px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 246px !important;
+        padding: 6px 5px 19px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        padding: 22px 12px 22px 12px !important;             
+    }
+    .swal2-image{
+        transform: scale(1.2);
+        margin: 10px 0 10px 0 !important;  
+    }
+    .swal2-header #swal2-title{
+        font-size: 26px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        font-size: 21px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 21px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 17px !important;
+    }    
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 17px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 15px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 17px;
+    }
+    /* SweetAlert2 popup message END */
+}
+@media screen and (min-width : 414px) {
+    .options {
+        width: 80px;
+        height: 80px;
+        font-size: 15px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 270px !important;
+        transform: translate(0, -114%);
+        padding: 15px 10px 15px 10px !important; 
+    }
+    .swal2-cancel-msg{
+        width: 190px !important;
+    }
+    .swal2-cancel-confirm-msg{
+        width: 254px !important;
+        padding: 6px 5px 20px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        padding: 24px 12px 22px 12px !important;             
+    }
+    .swal2-image{
+        transform: scale(1.2);
+    }
+    .swal2-header #swal2-title{
+        font-size: 27px;
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        font-size: 22px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 22px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 18px !important;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 18px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 18px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 18px;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(1.1);
+    }       
+    /* SweetAlert2 popup message END */
+}
+@media only screen and (min-width : 768px) and (min-height: 1024px) {
+  .options {
+        width: 120px;
+        height: 120px;
+        font-size: 23px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 350px !important;
+        transform: translate(0, -127%);
+    }
+    .swal2-cancel-msg{
+        width: 240px !important;
+        transform: translate(0, -140%);
+        padding: 15px 0 22px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 340px !important;
+        padding: 31px 5px 31px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        padding: 24px 24px 22px 24px !important;             
+    }
+    .swal2-header #swal2-title{
+        font-size: 39px !important;  
+        /* top, right, bottom, left  */
+        margin: 0 0 13px 0 !important;  
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        /* top, right, bottom, left  */
+        margin: 17px 0 17px 0 !important;
+        font-size: 30px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 30px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 26px !important;
+    }
+    .swal2-image{
+        transform: scale(1.5);
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 26px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 20px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 26px;
+    }
+    .swal2-actions{
+        margin: 13px auto 0 auto !important;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(1.3);
+    }     
+    /* SweetAlert2 popup message END */
+}
+@media only screen and (min-width : 1024px) and (min-height: 1366px) {
+  .options {
+        width: 170px;
+        height: 170px;
+        font-size: 30px;
+    }
+    /* SweetAlert2 popup message START */
+    .swal2-thx-msg{
+        width: 500px !important;
+        transform: translate(0, -110%);
+        padding: 33px 5px 27px 5px !important; 
+    }
+    .swal2-cancel-msg{
+        width: 330px !important;
+        transform: translate(0, -130%);
+        padding: 37px 0 25px 0 !important; 
+    }
+    .swal2-cancel-confirm-msg{
+        width: 450px !important;
+        padding: 54px 5px 32px 5px !important; 
+    }
+    .swal2-textbox-msg{
+        width: 750px !important;
+        padding: 20px 30px 30px 30px !important;             
+    }
+    .swal2-image{
+        transform: scale(2.2);
+        padding: 17px 5px 17px 5px !important; 
+    }
+    .swal2-header #swal2-title{
+        font-size: 50px !important;  
+        /* top, right, bottom, left  */
+        padding: 13px 0 13px 0 !important;  
+        margin: 13px 0 0 0 !important;  
+    }
+    /* where people enter data */
+    .swal2-content .swal2-input{
+        /* top, right, bottom, left  */
+        /* margin: 17px 0 17px 0 !important; */
+        font-size: 37px !important;
+    }
+    /* show what people entered */
+    .swal2-content #swal2-content{
+        font-size: 37px !important;
+    }
+    /* Validation ERROR */
+    #swal2-validationerror{
+        font-size: 33px !important;
+    }
+    .swal2-actions .swal2-confirm #swal2-confirmBtnTxt {
+        font-size: 33px;
+    }
+    .swal2-actions .swal2-cancel{
+        /* top, right, bottom, left  */
+        margin: 0 0 0 30px !important; 
+    }
+    .swal2-actions .swal2-cancel #swal2-cancelBtnTxt {
+        font-size: 33px;
+    }
+    .swal2-actions{
+        margin: 18px auto 0 auto !important;
+    }
+    /* .swal2-success-ring is the success animation */
+    .swal2-animate-success-icon{
+        transform: scale(1.8);
+    }     
+    /* SweetAlert2 popup message END */ 
 }
