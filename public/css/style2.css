@@ -152,8 +152,8 @@ body{
         font-size: 12px;
     }
     body{
-        background: url("../image/main_1_cover.svg") center center fixed;
-        background-size: cover;
+        /* background: url("../image/main_1_cover.svg") center center fixed;
+        background-size: cover; */
     }
     /* loading animation */
     #title{

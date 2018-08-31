@@ -28,10 +28,10 @@ app.use(session({
     saveUninitialized : true,
     store: new MongoStore({
         mongooseConnection: mongoose.connection,
-        ttl: 60 * 60 // 1시간후 DB세션 소멸
+        ttl: 60 * 60 * 3 // 3시간후 DB세션 소멸
     }),
     cookie : {
-        maxAge : 1000 * 60 * 60 // 1시간후 쿠키 세션 소멸 
+        maxAge : 1000 * 60 * 60 * 3// 3시간후 쿠키 세션 소멸 
     }
 }));
 
