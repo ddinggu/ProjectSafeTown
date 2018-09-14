@@ -1,4 +1,11 @@
-var userSelectMarker = [];
+// marker를 담아두는 container를 생성하여 array에 따라 분할된 재활용가능한 markermaker function을 결합 
+const markerContainer = {
+    userSelectMarker : [],
+    userArea : [],
+    importedMarker : [],
+    tutorialMarkers : []
+}
+
 // 로딩시 유저가 선택한 CCTV마커를 불러오기 위한 마커 생성 함수
 function createUserCCTVMaker(location, id, options){
     var loadingMarker = new naver.maps.Marker({
@@ -14,23 +21,24 @@ function createUserCCTVMaker(location, id, options){
              }
     });
     addInUserSpotEvent(loadingMarker);
-    userSelectMarker.push(loadingMarker);
+    markerContainer.userSelectMarker.push(loadingMarker);
 }
 
-$(window).on('load', function(){
-    $.get('/userimportcctv', function(data) {    
-        if(!data) return;
+// 로그인시 회원의 데이터를 가져오는 용도
+// $(window).on('load', function(){
+//     $.get('/userimportcctv', function(data) {    
+//         if(!data) return;
         
-        for(var i=0; i < data[0].dangerLocation.length; i++){
-              var userCheckLocation = data[0].dangerLocation[i]['geometry']['coordinates'];
-              var id = data[0].dangerLocation[i]['id'];
-              var options = data[0].dangerLocation[i]['options'];
-              console.log(`DB에서 불러와진 id값 : ${id}`);
+//         for(var i=0; i < data[0].dangerLocation.length; i++){
+//               var userCheckLocation = data[0].dangerLocation[i]['geometry']['coordinates'];
+//               var id = data[0].dangerLocation[i]['id'];
+//               var options = data[0].dangerLocation[i]['options'];
+//               console.log(`DB에서 불러와진 id값 : ${id}`);
             
-              createUserCCTVMaker(userCheckLocation, id, options);
-        }
-    });
-}); 
+//               createUserCCTVMaker(userCheckLocation, id, options);
+//         }
+//     });
+// }); 
 
 // 사용자의 선택에 따른 위험정보 등록시, 생성되야하는 주황색 마커를 생성하기 위한 마커함수
 function createUserMaker(locationId, options){
@@ -48,7 +56,7 @@ function createUserMaker(locationId, options){
   });
 
   addInUserSpotEvent(locationMarker);
-  userSelectMarker.push(locationMarker);
+  markerContainer.userSelectMarker.push(locationMarker);
 }
 
 // 로그인된 회원의 등록위치정보 마커들을 클릭할 시 기존에 등록한 값을 찾아서 style을 부여한다.

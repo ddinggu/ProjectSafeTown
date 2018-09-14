@@ -1,5 +1,3 @@
-var tutorialMarkers = [];
-
 function createTutorialCCTVMaker(location){
   var marker = new naver.maps.Marker({
     position: new naver.maps.LatLng(location[1], location[0]),
@@ -12,9 +10,10 @@ function createTutorialCCTVMaker(location){
         origin: new naver.maps.Point(0, 0)
     }
   });
-  tutorialMarkers.push(marker);
+  markerContainer.tutorialMarkers.push(marker);
 }
 
+// 튜토리얼 
 var arrLang = {
   "en-us": {
     "navMenuLogin" : "Login",
@@ -65,13 +64,13 @@ if("localStorage" in window){
 
 $(document).ready(function(){
 
-  // // * language setting START
+  // * language setting START
   $(".lang").each(function(index, element) {
     $(this).text(arrLang[lang][$(this).attr("key")]);
   });
     
-  // // get/set the selected language
-  // // what happens after clicking the "English" or "한국어" button
+  // get/set the selected language
+  // what happens after clicking the "English" or "한국어" button
   $(".translate")
       .on({
           click : function() {
@@ -85,12 +84,10 @@ $(document).ready(function(){
               $(".lang").each(function(index, element) {
                 $(this).text(arrLang[lang][$(this).attr("key")]);
               });
-  // // * language setting END
           }
-          // // "click" END
       });
-      // "on" END
 
+// Navibar event 설정 
   $("#menuIcon").click(function(){
     /*$("#sideNav")[0].classList.toggle("visible");*/
      $("#sideNav")[0].style.width = "450px";
@@ -100,43 +97,12 @@ $(document).ready(function(){
     $("#sideNav")[0].style.width = 0;
   })
 
-  // // 경진 - testing
-  // $('.navMenu').click(function(){
-  //   $('#userform').css('z-index','101');
-  // })
-
   // show sign-up/login/delete_account sections when "login" is clicked 
   $('#userAccess').click(function(){
     $('#userform').css('z-index','101');
   })
 
-  // // START OF TUTORIAL
-  $("#tutorialGreen").hide();
-  $("#tutorialOrange").hide();
-  $("#tutorialTab").hide();
-  $("#tutorialOrangeIcon1").hide();
-  $("#tutorialOrangeIcon2").hide();
-  $("#tutorialSaferPathBtn").hide();
-  $("#tutorialOptionsExplanation").hide();
-  $("#tutorialSaferPath").hide();
-
-  $("#mapBackground").hide();
-  $("#mapBackground2").hide();
-  $("#mapBackground3").hide();
-  $("#mapBackground4").hide();
-  $("#mapBackground5").hide();
-  $("#mapBackground6").hide();
-
-  $(".tutorialSafe").hide();
-  $(".tutorialNotSafe").hide();
-
-  $("#tutorialOrangeSpot").hide();
-  $("#tutorialOption1").hide();
-  $("#tutorialOption2").hide();
-  $("#tutorialOption3").hide();
-  $("#tutorialOption4").hide();
-  $("#tutorialOption5").hide();
-
+  // START OF TUTORIAL
   // tutorial page 1 : safe areas
   $('#tutorialMenu').click(function(){
     $("#sideNav")[0].style.width = "0px";
@@ -225,9 +191,7 @@ $(document).ready(function(){
     $("#tutorialSaferPath").fadeOut();
 
     // 튜토리얼이 끝나면 튜토리얼용 마커들을 제거 
-    tutorialMarkers.forEach(function(el){
-      el.setMap(null);
-    })    
+    removeAllCCTVMaker(markerContainer.tutorialMarkers);
 
   });  
   // tutorial page 6 ends

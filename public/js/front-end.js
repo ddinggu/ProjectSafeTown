@@ -88,5 +88,4 @@ $(document).ready(function() {
 
 // multi-language inside of swal not working : https://jsfiddle.net/hlim188/15no3zyd/68/
 
-
 })

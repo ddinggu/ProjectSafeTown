@@ -30,21 +30,39 @@ module.exports = function(app, User, config){
             });
     });
 
-    // Import cctv data router
-    app.get('/testimportcctv', function(req, res) {
-        MongoClient.connect(url, function(err, client) {
+    // // Import cctv data router
+    // app.get('/testimportcctv', function(req, res) {
+    //     MongoClient.connect(url, function(err, client) {
+    //         if(err) console.log(err);
+    //         var db = client.db("cctv");
+    //         var cursor = db.collection('geoSeoulcctv').find({});
+    //         cursor.toArray( function(err, item) {
+    //             if(err) console.log(err);
+    //             else {
+    //                 res.send(item);
+    //                 client.close();
+    //             }
+    //         })
+    //     });
+    // });
+
+
+    // Import cctv data around user sphere 
+    app.get('/storedaroundcctv', (req, res) =>{
+        let coords = [parseFloat(req.query.lng), parseFloat(req.query.lat)]
+        console.log(coords);
+        
+        MongoClient.connect(url, (err, client) => {
             if(err) console.log(err);
-            var db = client.db("cctv");
-            var cursor = db.collection('geoSeoulcctv').find({});
-            cursor.toArray( function(err, item) {
-                if(err) console.log(err);
-                else {
-                    res.send(item);
-                    client.close();
-                }
-            })
-        });
-    });
+            const db = client.db('cctv');
+            
+            loadStoredCCTVdata(db, coords, (result) => {
+                res.send(result);
+                client.close();
+            });
+            
+        })
+    })
     
     // Import logined cctv data router
     app.get('/userimportcctv', function(req, res) {
@@ -131,3 +149,48 @@ module.exports = function(app, User, config){
     });
 
 }// end point
+
+
+
+function loadStoredCCTVdata(db, coords, cb){
+    const collection = db.collection('geoSeoulcctv');
+    let result = {};
+
+    collection.find(
+        { 'geometry':
+          { $near :
+            { $geometry:
+              { type: "Point",  coordinates: coords },
+                $maxDistance: 150
+            }
+          }
+        }
+      )
+    .toArray( (err, docs) => {
+        if(err) {
+            console.dir(err);
+            
+            result.result = 0;
+            result.comment = err;
+            result.item = [];
+        }
+        else if(!docs.length || docs.length === 1){
+            console.log('정보X');
+            
+            result.result = 2
+            result.comment = "근처에 위치한 정보가 없습니다."
+            result.item = [];  
+        }
+        else {
+            console.log('정상출력');
+            
+            result.result = 1
+            result.comment = `근처에 위치한 정보가 ${docs.length}개 입니다.`
+            result.item = docs;  
+        }
+
+        cb(result);
+    })
+
+}
+

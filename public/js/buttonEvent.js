@@ -13,7 +13,7 @@ $('body').on('click', '.withoutInput', function(e) {
       "geolocation" : [window.lng,window.lat],
       "flag" : buttonFlag,
       "options" : choosenOptions
-    };   
+    };  
     
     if(!buttonFlag){
         returnData(locationInfo)
@@ -273,15 +273,7 @@ function returnData(locationInfo){
 }
 
 // title의 첫번째로 정해진 locationId값을 배열에서 탐색하여 map에 존재하는 주황 마커들을 제거해준다.
-// 찾으면 loop를 바로 나가고 싶은데, 왜 findIndex는 안먹지?
-// forEach를 사용한다면, 선택된 요소를 삭제하는 법은??????
 function removeMarkerTool(locationId){
-    // var index = userSelectMarker.findIndex((el) => {
-    //         return el.title.spilt('@')[0] === locationId;
-    // });
-    
-    // userSelectMarker[index].setMap(null);
-    // userSelectMarker.splice(index, 1);
     userSelectMarker.forEach((el) => {
         if(el.title.split('@')[0] === locationId){
             el.setMap(null);
